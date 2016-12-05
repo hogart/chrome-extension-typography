@@ -1,0 +1,20 @@
+{
+  "name": "chrome-extension-typographer",
+  "private": true,
+  "version": "0.3.0",
+  "description": "Производит полуавтоматическую расстановку типографических символов в полях ввода",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Konstantin Kitmanov <doctor.hogart@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "fnd": "^0.3.3",
+    "js-typographer": "^1.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.11.1",
+    "eslint-config-yandex": "^1.0.6"
+  }
+}

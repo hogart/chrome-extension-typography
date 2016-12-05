@@ -1,0 +1,60 @@
+article {
+    font: 90%/100% sans-serif;
+}
+header {
+    font: bold 200%/210% sans-serif;
+}
+.b-rules dt {
+    font-weight: bold;
+}
+.b-rules dd {
+    margin-bottom: 1em;
+}
+
+.tabs-container {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+    .tabs-container .tabs-header {
+        float: left;
+        width: 200px;
+        height: 26px;
+        border: 1px solid grey;
+        border-radius: 3px 3px 0 0;
+        background-color: #eee;
+        text-align: center;
+        line-height: 26px;
+        border-bottom: 0 none;
+        cursor: pointer;
+    }
+    .tabs-container .tabs-pane {
+        display: none;
+    }
+        .tabs-container .tabs-header.selected {
+            background-color: #fff;
+            cursor: default;
+        }
+        .tabs-container .tabs-pane.selected {
+            display: block;
+            float: right;
+            width: 100%;
+            margin-left: -100%;
+            margin-top: 26px;
+            background-color: white;
+        }
+            .tabs-container .tabs-pane.selected section {
+                padding: 1em 2em;
+            }
+
+
+form fieldset {
+    border: 1px solid grey;
+    border-radius: 3px;
+}            
+form label {
+    display: block;
+}
+    label input[type="checkbox"] {
+        margin-right: .5em;
+    }

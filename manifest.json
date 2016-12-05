@@ -1,0 +1,23 @@
+{
+  "name": "Типографер",
+  "description": "Производит полуавтоматическую расстановку типографических символов в полях ввода",
+  "version": "0.3.0",
+  
+  "icons": {
+    "16": "ico/16.png",
+    "48": "ico/48.png",
+    "128": "ico/128.png"
+  },
+  
+  "permissions": ["tabs", "contextMenus"],
+  "background_page": "background.html",
+  "options_page": "options.html",
+  
+  "content_scripts": [
+		{
+			"matches": ["http://*/*"],
+			"js": ["js/focusWatcher.js"],
+			"run_at": "document_end"
+        }
+    ]    
+}

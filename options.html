@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Настройки типографера</title>
+    <link rel="stylesheet" href="css/options.css"/>
+    <script src="js/utils.js"></script>
+    <script src="js/tabs.js"></script>
+    
+    <script src="js/Defaults.js"></script>
+	<script src="js/Settings.js"></script>
+	<script src="js/JsonForm.js"></script>    
+    <script>
+        function setupTabs() {
+            var hash = window.location.hash || 'settings';
+            
+            var hashesToIndices = {
+                settings: 0,
+                help: 1
+            };
+            
+            var tabs = new DlTabs(DOM.find('dl.tabs-container')[0]);
+            tabs.setByIndex(hashesToIndices[hash])            
+        }
+        
+        function setupForm() {
+            var form = DOM.find('form')[0];
+            
+			JsonForm.toForm(
+				form,
+				Settings.loadAll()
+			);
+
+            DOM.bind(form, 'submit', function(evt) {
+                evt.preventDefault();
+                
+                Settings.saveAll(
+                    JsonForm.fromForm(form)
+                );
+                
+                return false
+            });
+            
+            DOM.bind(form, 'reset', function(evt) {
+                evt.preventDefault();
+                
+                Settings.saveAll(DEFAULTS);
+                JsonForm.toForm(form, DEFAULTS);
+                
+                return false
+            })
+        }
+        
+        window.onload = function() {
+            setupTabs();
+            setupForm();
+        }
+    </script>
+</head>
+
+<body>
+    <dl class="tabs-container">
+        <dt class="tabs-header selected">Настройки</dt>
+        <dd class="tabs-pane selected">
+            <section>
+                <article>
+                    <header>Настройки</header>
+                    <form>
+                        <fieldset>
+                            <legend>Включить следующие замены:</legend>
+
+                            <label><input type="checkbox" name="double2French"/>"двойные кавычки" в «французские»</label>
+                            <label><input type="checkbox" name="single2German"/>'одинарные кавычки' в „немецкие“</label>
+                            <label><input type="checkbox" name="dashes2MDash"/>-- в —</label>
+                            <label><input type="checkbox" name="dashesBetweenNumbers"/>-- между цифрами в &ndash;</label>
+                            <label><input type="checkbox" name="dots2Hellip"/>три точки в символ троеточия</label>
+                            <label><input type="checkbox" name="arrows"/>&lt;-, -&gt; и &lt;-&gt; в ←, → и ↔</label>
+                            <label><input type="checkbox" name="fractions"/>дроби 1/4, 1/2 и 3/4 в ¼, ½ и ¾</label>
+                            <label><input type="checkbox" name="copyrights"/>(c), (r) и (tm) в ©, ® и ™</label>
+                        </fieldset>
+                        <button type="reset">По умолчанию</button>
+                        <button type="submit">Сохранить</button>
+                    </form>
+                </article>
+            </section>        
+        </dd>
+        
+        <dt class="tabs-header">Справка</dt>
+        <dd class="tabs-pane">
+            <section>
+                <article>
+                    <header>Правила преобразования</header>
+                    <p>Если в тексте встречаются html-тэги, то преобразуется все, что находится вне них, их текстовое содержимое и атрибуты alt, title и text (такой атрибут есть у тэга lj-cut). Содержимое тэгов &lt;code/&gt; и &lt;var/&gt; не подвергается преобразованию — только происходит замена &lt; и &gt; на &amp;lt; и &amp;gt;. Содержимое html-комментариев так же обрабатывается.</p>
+                    <dl class="b-rules">
+                        <dt>Длинное тире</dt>
+                        <dd>Два дефиса преобразуются в длинное тире, если до и после них находится либо пробельные символы, либо конец или начало строки.</dd>
+                        
+                        <dt>Короткое тире</dt>
+                        <dd>Два дефиса преобразуются в короткое тире, если они окружены цифрами с двух сторон без отбивки пробелами.</dd>
+                        
+                        <dt>«Французские» кавычки</dt>
+                        <dd>Двойная кавычка (") преобразуется в открывающую, если слева от нее пробельные символы или начало строки, а справа — непробельные символы. Двойная кавычка преобразуется в закрывающаю, если слева от нее находится непробельный символ, а справа пробельный или конец строки.</dd>
+                        
+                        <dt>„Немецкие“ кавычки</dt>
+                        <dd>Преобразуются из одинарной кавычки по тем же правилам, что и «ёлочки».</dd>
+                        
+                        <dt>Троеточие</dt>
+                        <dd>Три подряд поставленные точки (...) преобразуются в троеточие (…).</dd>
+                        
+                        <dt>Стрелки</dt>
+                        <dd>Сочетания &lt;-, -&gt; и &lt;-&gt; преобразуются в ←, → и ↔ соответственно.</dd>                        
+                        
+                        <dt>©</dt>
+                        <dd>Сочетания (c), (r) и (tm) преобразуются в ©, ® и ™ соответственно. Допускаются символы в обоих регистрах.</dd>
+                        
+                        <dt>Дроби</dt>
+                        <dd>1/4 — ¼, 1/2 — ½, 3/4 — ¾</dd>
+                        
+                        
+                    </dl> 
+                    <header>Предупреждение</header>
+                    <p>Типографер не гарантирует целостность ваших данных, хотя и задуман как можно менее деструктивным.</p>
+                </article>
+            </section>        
+        </dd>
+    </dl>
+    
+
+
+</body>
+</html>

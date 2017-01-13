@@ -5,16 +5,27 @@
   "description": "Производит полуавтоматическую расстановку типографических символов в полях ввода",
   "main": "",
   "scripts": {
+    "dev:bg": "rollup -c ./rollup.config.js --watch --environment ENTRY:background",
+    "dev:options": "rollup -c ./rollup.config.js --watch --environment ENTRY:options",
+    "build:bg": "rollup -c ./rollup.config.js --environment ENTRY:background,PROD:true",
+    "build:options": "rollup -c ./rollup.config.js --environment ENTRY:options,PROD:true",
+    "start": "concurrently \"npm run dev:options\" \"npm run dev:bg\"",
+    "build": "concurrently \"npm run build:options\" \"npm run build:bg\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Konstantin Kitmanov <doctor.hogart@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "fnd": "^0.3.3",
-    "js-typographer": "^1.0.1"
+    "js-typographer": "^1.2.0"
   },
   "devDependencies": {
+    "concurrently": "^3.1.0",
     "eslint": "^3.11.1",
-    "eslint-config-yandex": "^1.0.6"
+    "eslint-config-yandex": "^1.0.6",
+    "rollup": "^0.36.4",
+    "rollup-plugin-commonjs": "^5.0.5",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-watch": "^2.5.0"
   }
 }

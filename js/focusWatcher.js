@@ -1,23 +1,22 @@
-var currentInput;
-var cursorPosition;
+const actionMap = {
+    getCurrentInput(request, callback, currentInput) {
+        callback(currentInput.value);
+    },
 
-function reqDispatcher(request, sender, callback) {
-    currentInput = document.activeElement;
-    cursorPosition = currentInput.selectionStart;
+    setCurrentInputContent(request, callback, currentInput) {
+        currentInput.value = request.value;
+    },
 
-    switch (request.action) {
-        case 'getCurrentInput': 
-            callback(currentInput.value);
-        break;
-        
-        case 'setCurrentInputContent':
-            currentInput.value = request.value;
-        break;
-        
-        case 'insertAccent':
-            callback({text: currentInput.value, cursorPosition: cursorPosition});
-        break
-    }
+    insertAccent(request, callback, currentInput) {
+        callback({
+            text: currentInput.value,
+            cursorPosition: currentInput.selectionStart,
+        });
+    },
+};
+
+function messageDispatcher(request, sender, callback) {
+    actionMap[request.action](request, callback, document.activeElement);
 }
 
-chrome.extension.onRequest.addListener(reqDispatcher);
+chrome.runtime.onMessage.addListener(messageDispatcher);

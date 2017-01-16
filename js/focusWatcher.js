@@ -1,10 +1,21 @@
+const isInput = (element) => element.matches(`input, textarea`);
+const isRich = (element) => element.matches(`[contenteditable]`);
+
 const actionMap = {
     getCurrentInput(request, callback, currentInput) {
-        callback(currentInput.value);
+        if (isInput(currentInput)) {
+            callback(currentInput.value);
+        } else if (isRich(currentInput)) {
+            callback(currentInput.innerHTML);
+        }
     },
 
     setCurrentInputContent(request, callback, currentInput) {
-        currentInput.value = request.value;
+        if (isInput(currentInput)) {
+            currentInput.value = request.value;
+        } else if (isRich(currentInput)) {
+            currentInput.innerHTML = request.value;
+        }
     },
 
     insertAccent(request, callback, currentInput) {

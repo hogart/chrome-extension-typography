@@ -1,12 +1,12 @@
 const isInput = (element) => element.matches(`input, textarea`);
-const isRich = (element) => element.matches(`[contenteditable]`);
+const isRich = (element) => element.matches(`[contenteditable=""], [contenteditable="true"]`);
 
 const actionMap = {
     getCurrentInput(request, callback, currentInput) {
         if (isInput(currentInput)) {
             callback(currentInput.value);
         } else if (isRich(currentInput)) {
-            callback(currentInput.innerHTML);
+            callback(currentInput.textContent);
         }
     },
 
@@ -23,6 +23,16 @@ const actionMap = {
             text: currentInput.value,
             cursorPosition: currentInput.selectionStart,
         });
+    },
+
+    replaceText(request, callback, currentInput) {
+        if (isInput(currentInput)) {
+            callback({
+                text: currentInput.value,
+                selectionStart: currentInput.selectionStart,
+                selectionEnd: currentInput.selectionEnd,
+            });
+        }
     },
 };
 
